@@ -5,19 +5,19 @@
 import { useState } from "react";
 import Cloud from "@/components/cloud/page";
 import { usePostStore } from "../../components/lib/store";
-import { handlePublish } from "@/components/Navbar/Publish";
-import { useRouter } from "next/navigation";
+
+
 import { useEffect } from "react";
 
 export default function Yazi() {
-  const router = useRouter();
-  const imageUrl = usePostStore((state) => state.imageUrl)
+  
+  
   const title = usePostStore((state) => state.title);
   const content = usePostStore((state) => state.content);
   const setImageUrl = usePostStore((state)=> state.setImageUrl);
   const setTitle = usePostStore((state) => state.setTitle);
   const setContent = usePostStore((state) => state.setContent);
-  const [isPublished, setIsPublished] = useState(false); //  Yayınlanıp yayınlanmadığını takip eden state
+  const [isPublished] = useState(false); //  Yayınlanıp yayınlanmadığını takip eden state
 
   /* Title */
 
@@ -28,7 +28,7 @@ export default function Yazi() {
         setTitle(storedTitle);
       }
     }
-  }, [isPublished]);
+  }, [isPublished, setTitle]);
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (isPublished) return;  //  Eğer yayınlandıysa değişiklik yapma
@@ -48,7 +48,7 @@ export default function Yazi() {
         setContent(storedContent);
       }
     }
-  }, [isPublished]);
+  }, [isPublished, setContent]);
 
   const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     if (isPublished) return;  // ✅ Eğer yayınlandıysa değişiklik yapma
@@ -66,7 +66,7 @@ export default function Yazi() {
         setImageUrl(storedImageUrl);
       }
     }
-  }, [isPublished]);
+  }, [isPublished, setImageUrl]);
 
   const handleImageUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (isPublished) return;  //  Eğer yayınlandıysa değişiklik yapma
@@ -75,26 +75,7 @@ export default function Yazi() {
     localStorage.setItem("savedImageUrl", newImageUrl);
   };
 
-  /*  Publish İşlemi */
-  const handlePublishClick = () => {
-    if (title.trim() && content.trim()) {
-      handlePublish(router);  //  Yayınlama işlemini çağır
-      setIsPublished(true);  // Yayınlandığını işaretle
-      setTitle("");  // Title sıfırla
-      setContent("");  //  Content sıfırla
-      setImageUrl("");
-      localStorage.removeItem("savedTitle");  //  LocalStorage'dan da temizle
-      localStorage.removeItem("savedContent");
-      localStorage.removeItem("savedImageUrl")
-    } else {
-      // Eğer content boşsa, sadece title'ı sıfırlamadan bırak
-      if (!content.trim()) {
-        setContent("");  // content'i sıfırla
-        localStorage.removeItem("savedContent");
-      }
-    }
-  };
-
+  
   return (
     <div>
       <div className="max-w-2xl mx-auto p-4">

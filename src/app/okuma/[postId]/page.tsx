@@ -9,13 +9,21 @@ export default function PostDetailPage() {
   const params = useParams(); 
   
   const postId = params?.postId; // postId'yi al
+
+  type Post = {
+    id: number;
+    title: string;
+    content: string;
+    imageUrl: string;
+    timestamp: number;
+  };
   
-  const [post, setPost] = useState<any>(null);
+  const [post, setPost] = useState<Post | null>(null);
 
   useEffect(() => {
     if (postId) {
       const foundPost = usePostStore.getState().posts.find((p) => p.id === Number(postId));
-      setPost(foundPost);
+      setPost(foundPost ?? null);
     }
   }, [postId]);
 

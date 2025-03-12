@@ -10,7 +10,7 @@ export const handlePublish = (router: ReturnType<typeof useRouter>) => {
   const title = usePostStore.getState().title;
   const content = usePostStore.getState().content;
   const addPost = usePostStore.getState().addPost;
-  const imageUrl = usePostStore.getState().imageUrl;
+
 
   if (title.trim() && content.trim() ) {
     addPost();
@@ -39,14 +39,9 @@ export default function Publish() {
         setTitle(storedTitle);
       }
     }
-  }, [isPublished]);
+  }, [isPublished, setTitle]);
 
-  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (isPublished) return;  //  Eğer yayınlandıysa değişiklik yapma
-    const newTitle = e.target.value;
-    setTitle(newTitle);
-    localStorage.setItem("savedTitle", newTitle);
-  };
+  
 
   /* Content */
 
@@ -57,14 +52,9 @@ export default function Publish() {
         setContent(storedContent);
       }
     }
-  }, [isPublished]);
+  }, [isPublished, setContent]);
 
-  const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    if (isPublished) return;  // ✅ Eğer yayınlandıysa değişiklik yapma
-    const newContent = e.target.value;
-    setContent(newContent);
-    localStorage.setItem("savedContent", newContent);
-  };
+  
 
    /* Image Url */
 
@@ -75,14 +65,8 @@ export default function Publish() {
         setImageUrl(storedImageUrl);
       }
     }
-  }, [isPublished]);
+  }, [isPublished, setImageUrl]);
 
-  const handleImageUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (isPublished) return;  //  Eğer yayınlandıysa değişiklik yapma
-    const newImageUrl = e.target.value;
-    setImageUrl(newImageUrl);
-    localStorage.setItem("uploadedImage", newImageUrl);
-  };
 
   /*  Publish İşlemi */
   const handlePublishClick = () => {

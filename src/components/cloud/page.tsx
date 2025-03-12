@@ -14,7 +14,7 @@ const Cloud = () => {
     if (storedImage) {
       setImageUrl(storedImage);
     }
-  }, []);
+  }, [setImageUrl]);
 
   const handleUploadSuccess = (result: CloudinaryUploadWidgetResults) => {
     if (result.event === "success") {
